@@ -15,7 +15,7 @@ page{
  
 .modalDlg{
   width: 90%;
-  height: 50%;
+  height: 60%;
   z-index: 9900;  /* 要比遮罩层的大 */
   background-color: #FFA07A;
   border-radius: 30rpx;
@@ -24,46 +24,10 @@ page{
   left: 5%;  /* (100% - width)/2 */
 }
 
-
-.box{
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 50px;
-  
-}
-
-.msg-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.title{
-  margin: 10rpx;
-}
-
-.msg{
-  margin: 20rpx;
-}
-
-.line{
-  width: 90%;
-  height: 1rpx;
-  background-color:gray; 
-}
-
-.btn{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.btn-cancle {
-  margin: 30rpx;
-}
-
-.btn-confirm{
-  margin: 30rpx;
+image{
+  width:80%;
+  height:70%;
+  position:relative;
+  left: 10%;
+  top:25px;
 }

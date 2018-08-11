@@ -1,6 +1,7 @@
 //index.js
 //获取应用实例
 const app = getApp()
+var QR = require("../../utils/wxqrcode.js");
 
 Page({
   data: {
@@ -8,26 +9,22 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    hasMask: false,
-    access: {
-      title: "微信授权",
-      msg: '获得你公开信息（昵称、头像）',
-      cancle: '取消',
-      confirm: '授权'
-    }
+    showQR:false,
   },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  }, 
   
-  showMask: function () {
+  showQR:function(){
     this.setData({
-      hasMask: true
+      showQR: true
     })
-    console.log("show")
+    console.log("showQR")
+    var size = this.getQRCodeSize();
+    // 经测试 wxqrcode.js 库能生成二维码的 text 长度最大为 62 个字符，估计是 bug
+    // 所以 只能使用 qrcode.js 库，根据已有代码，自己调试吧
+    var text = 'F200665A302960CAF3B666CA5988C5DBF200665A302960CAF3B666CA598888';
+    var base64_qr_img = this.createQRCode(text,size);
+    this.setData({
+      qr_code: base64_qr_img
+    })
   },
 
   preventTouchMove: function (e) {
@@ -40,7 +37,7 @@ Page({
 
   cancle: function () {
     this.setData({
-      hasMask: false
+      showQR:false,
     })
   },
   onLoad: function () {
@@ -78,10 +75,29 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
-    if (this.data.hasUserInfo && this.data.canIUse){
-      wx.showToast({
-        title: '授权成功',
-      })
+  },
+
+  //获取二维码大小，适配不同屏幕大小的canvas
+  getQRCodeSize: function () {
+    var size = 0;
+    try {
+      var res = wx.getSystemInfoSync();
+      var scale = 750 / 278; //不同屏幕下QRcode的适配比例；设计稿是750宽
+      var width = res.windowWidth / scale;
+      size = width;
+    } catch (e) {
     }
-  }
+    return size;
+  },
+
+  //创建(绘制) base64 编码的二维码
+  createQRCode: function (text, size) {
+    let that = this
+    let _img = QR.createQrCodeImg(text, {
+      size: parseInt(size)
+    })
+    console.log("_img: " + _img)
+    return _img;
+  },
+
 })
