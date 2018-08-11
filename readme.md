@@ -6,4 +6,4 @@
 展示
 
 
-![](https://github.com/MoTec95/CustomPop/blob/master/scr-cap/access.gif)
+![](https://github.com/MoTec95/QRPop/blob/master/scr-cap/qrpop.gif)
